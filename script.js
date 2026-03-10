@@ -1,13 +1,16 @@
 var board = null
 var game = new Chess()
 
-var config = {
-draggable: true,
-position: 'start',
-onDrop: onDrop
+function onDragStart(source, piece) {
+
+if (game.game_over()) return false
+
+if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+(game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+return false
 }
 
-board = Chessboard('board', config)
+}
 
 function onDrop(source, target) {
 
@@ -19,17 +22,17 @@ promotion: 'q'
 
 if (move === null) return 'snapback'
 
-window.setTimeout(makeAIMove, 250)
+window.setTimeout(makeAIMove, 300)
 
 updateStatus()
 
 }
 
-function makeAIMove(){
+function makeAIMove() {
 
 var moves = game.moves()
 
-if(moves.length === 0) return
+if (moves.length === 0) return
 
 var randomMove = moves[Math.floor(Math.random() * moves.length)]
 
@@ -41,7 +44,7 @@ updateStatus()
 
 }
 
-function updateStatus(){
+function updateStatus() {
 
 var status = ''
 
@@ -59,7 +62,7 @@ status = 'Game over, ' + moveColor + ' is in checkmate.'
 
 else if (game.in_draw()) {
 
-status = 'Game over, drawn position'
+status = 'Game over, draw.'
 
 }
 
@@ -68,9 +71,7 @@ else {
 status = moveColor + ' to move'
 
 if (game.in_check()) {
-
-status += ', ' + moveColor + ' is in check'
-
+status += ' (check)'
 }
 
 }
@@ -79,4 +80,23 @@ document.getElementById('status').innerHTML = status
 
 }
 
+var config = {
+draggable: true,
+position: 'start',
+onDragStart: onDragStart,
+onDrop: onDrop
+}
+
+board = Chessboard('board', config)
+
 updateStatus()
+
+document.getElementById("restart").addEventListener("click", function(){
+
+game.reset()
+
+board.start()
+
+updateStatus()
+
+})
