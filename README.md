@@ -36,7 +36,7 @@ chess-game │ ├── index.html ├── style.css ├── script.js ├�
 
 ### 1 Clone the repository
 
-[git clone](https://github.com/pantane1/chess-game.git)
+[.git clone](https://github.com/pantane1/chess-game.git)
 
 ### 2 Navigate into the project
 
