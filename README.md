@@ -36,7 +36,7 @@ chess-game │ ├── index.html ├── style.css ├── script.js ├�
 
 ### 1 Clone the repository
 
-git clone https://github.com/yourusername/chess-game.git
+[git clone](https://github.com/pantane1/chess-game.git)
 
 ### 2 Navigate into the project
 
@@ -110,4 +110,4 @@ This project is open-source and available under the **MIT License**.
 If you find this project helpful, consider giving the repository a **star**.
 
 
-[#denjagidev](https://nf-d.netlify.app/)
+**[#denjagidev](https://nf-d.netlify.app/)**
