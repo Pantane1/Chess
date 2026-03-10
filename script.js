@@ -1,74 +1,82 @@
-const board = document.getElementById("board")
+var board = null
+var game = new Chess()
 
-const pieces = [
-"♜","♞","♝","♛","♚","♝","♞","♜",
-"♟","♟","♟","♟","♟","♟","♟","♟",
-"","","","","","","","",
-"","","","","","","","",
-"","","","","","","","",
-"","","","","","","","",
-"♙","♙","♙","♙","♙","♙","♙","♙",
-"♖","♘","♗","♕","♔","♗","♘","♖"
-]
-
-let selected = null
-let turn = "white"
-
-function drawBoard(){
-
-board.innerHTML=""
-
-for(let i=0;i<64;i++){
-
-const square=document.createElement("div")
-
-square.classList.add("square")
-
-const row=Math.floor(i/8)
-const col=i%8
-
-if((row+col)%2==0){
-square.classList.add("white")
-}else{
-square.classList.add("black")
+var config = {
+draggable: true,
+position: 'start',
+onDrop: onDrop
 }
 
-square.dataset.index=i
-square.innerText=pieces[i]
+board = Chessboard('board', config)
 
-square.addEventListener("click",handleMove)
+function onDrop(source, target) {
 
-board.appendChild(square)
+var move = game.move({
+from: source,
+to: target,
+promotion: 'q'
+})
+
+if (move === null) return 'snapback'
+
+window.setTimeout(makeAIMove, 250)
+
+updateStatus()
 
 }
 
-}
+function makeAIMove(){
 
-function handleMove(e){
+var moves = game.moves()
 
-const index=e.target.dataset.index
+if(moves.length === 0) return
 
-if(selected===null){
+var randomMove = moves[Math.floor(Math.random() * moves.length)]
 
-selected=index
-e.target.style.border="3px solid red"
+game.move(randomMove)
 
-}else{
+board.position(game.fen())
 
-pieces[index]=pieces[selected]
-pieces[selected]=""
-
-selected=null
-
-drawBoard()
-
-turn=turn==="white"?"black":"white"
-
-document.getElementById("status").innerText=
-turn.charAt(0).toUpperCase()+turn.slice(1)+"'s Turn"
+updateStatus()
 
 }
 
+function updateStatus(){
+
+var status = ''
+
+var moveColor = 'White'
+
+if (game.turn() === 'b') {
+moveColor = 'Black'
 }
 
-drawBoard()
+if (game.in_checkmate()) {
+
+status = 'Game over, ' + moveColor + ' is in checkmate.'
+
+}
+
+else if (game.in_draw()) {
+
+status = 'Game over, drawn position'
+
+}
+
+else {
+
+status = moveColor + ' to move'
+
+if (game.in_check()) {
+
+status += ', ' + moveColor + ' is in check'
+
+}
+
+}
+
+document.getElementById('status').innerHTML = status
+
+}
+
+updateStatus()
