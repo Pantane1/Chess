@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
@@ -11,15 +10,9 @@
 <!-- Favicon -->
 <link rel="icon" type="image/x-icon" href="/123.img/favicon%20(2).ico">
 
-<!-- Chessboard UI -->
+<!-- Chessboard CSS -->
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard.min.css"/>
-
-<!-- Chess Engine -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/chess.min.js"></script>
-
-<!-- Chessboard Library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard.min.js"></script>
 
 <link rel="stylesheet" href="style.css">
 
@@ -29,12 +22,26 @@ href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard.min.
 
 <h1>♟️ Pantane Chess</h1>
 
+<div id="game-container">
+
 <div id="board"></div>
 
-<p id="status"></p>
+<div id="game-info">
+
+<p id="status">Loading...</p>
+
+<button id="restart">Restart Game</button>
+
+</div>
+
+</div>
+
+<!-- Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/chess.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard.min.js"></script>
 
 <script src="script.js"></script>
 
 </body>
-
 </html>
